@@ -29,7 +29,8 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 - As a user, I want readers to be able to like a blog post
 - As a user, I want readers to be able to comment on a blog post
 - As a user, I want to subscribe to an email letter
-- As a user, I just want to run a script to create, update and delete posts.
+- As a user, I want to contact the blog by email
+- As a user, I just want to run a script to create and delete posts.
 
 ## Implementation
 
@@ -65,7 +66,6 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
   - **eslint-plugin-react**: ^7.34.1
   - **eslint-plugin-react-hooks**: ^4.6.0
   - **eslint-plugin-react-refresh**: ^0.4.6
-- **Nodemon**: ^3.1.4 (Development server)
 - **@vitejs/plugin-react**: ^4.2.1 (Vite plugin for React)
 
 ### Other Libraries
@@ -94,207 +94,83 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 
 ![](sketchblog.png)
 
-### Endpoints
+### Data
 
-**GET /cafes**
+#### Post
 
-- Get cafés, with an optional "visited" if the user is logged in or not
+The `Post` model includes:
 
-Parameters:
+- `title` (String, required): The title of the blog post
+- `content` (String, required): The content of the blog post
+- `author` (String, required): The author of the blog post
+- `date` (Date, required): The date the blog post was created
+- `image` (Buffer): The image data for the blog post
+- `imageUrl` (String): The URL of the image
+- `likes` (Number, default: 0): The number of likes the post has received
+- `featured` (Boolean, default: false): Indicates if the post is featured
 
-- longitude: User-provided location as a number
-- latitude: User-provided location as a number
-- token (optional): JWT used to add "visited" boolean
+#### Subscribe
 
+The `Subscribe` feature currently collects consent, emails and names in a json file.
+
+### Endpoints examples
+
+**GET /**
+Get all posts
 Response:
-
-```
 [
-    {
-        "id": 1,
-        "name": "Quantum Coffee",
-        "distance": 0.25,
-        "averageRating": 4.5,
-        "visited": true
-    },
-    ...
+{
+"_id": "60c72b2f5f1b2c001c8e4d1a",
+"title": "My First Blog Post",
+"content": "This is the content of the first blog post.",
+"author": "Author Name",
+"date": "2023-07-05T00:00:00.000Z",
+"image": {
+"data": "<image data>",
+"contentType": "image/png"
+},
+"likes": 0,
+"featured": false
+}
 ]
-```
 
-**GET /cafes/:id**
+**GET /:id**
+Get single post
+Response:
+{
+"\_id": "60c72b2f5f1b2c001c8e4d1a",
+"title": "My First Blog Post",
+"content": "This is the content of the first blog post.",
+"author": "Author Name",
+"date": "2023-07-05T00:00:00.000Z",
+"image": {
+"data": "<image data>",
+"contentType": "image/png"
+},
+"likes": 0,
+"featured": false
+}
 
-- Get café by id, with an optional "userRating" if the user is logged in or not
-
+**POST /:id/like**
+Like a post
 Parameters:
 
-- id: Café id as number
-- token (optional): JWT used to add user rating
-
+id: Post ID
 Response:
-
-```
 {
-    "id": 1,
-    "name": "Quantum Coffee",
-    "distance": 0.25,
-    "averageRating": 4.5,
-    "userRating": 5
+"likes": 1
 }
-```
 
-**POST /cafes/:id/rating**
-
-- Logged in user can add their rating of a café
-
-Parameters:
-
-- id: Café id
-- token: JWT of the logged in user
-- rating: Number Rating out of 5 in 0.5 increments
-
-Response:
-
-```
-{
-    "id": 1,
-    "name": "Quantum Coffee",
-    "distance": 0.25,
-    "averageRating": 4.5,
-    "userRating": 5
-}
-```
-
-**PUT /cafes/:id/rating**
-
-- Logged in user can update their rating of a café
-
-Parameters:
-
-- id: Café id
-- token: JWT of the logged in user
-- rating: Number Rating out of 5 in 0.5 increments
-
-Response:
-
-```
-{
-    "id": 1,
-    "name": "Quantum Coffee",
-    "distance": 0.25,
-    "averageRating": 4.5,
-    "userRating": 5
-}
-```
-
-**POST /users/register**
-
-- Add a user account
-
-Parameters:
-
-- email: User's email
-- password: User's provided password
-
-Response:
-
-```
-{
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
-}
-```
-
-**POST /users/login**
-
-- Login a user
-
-Parameters:
-
-- email: User's email
-- password: User's provided password
-
-Response:
-
-```
-{
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
-}
-```
+**DELETE /:id**
 
 ### Auth
 
-- JWT auth
-  - Before adding auth, all API requests will be using a fake user with id 1
-  - Added after core features have first been implemented
-  - Store JWT in localStorage, remove when a user logs out
-  - Add states for logged in showing different UI in places listed in mockups
+N/A
 
-## Roadmap
-
-- Create client
-
-  - react project with routes and boilerplate pages
-
-- Create server
-
-  - express project with routing, with placeholder 200 responses
-
-- Create migrations
-
-- Gather 15 sample café geolocations in two different cities
-
-- Create seeds with sample café data
-
-- Deploy client and server projects so all commits will be reflected in production
-
-- Feature: List cafés from a given location
-
-  - Implement list cafés page including location form
-  - Store given location in sessionStorage
-  - Create GET /cafes endpoint
-
-- Feature: View café
-
-  - Implement view café page
-  - Create GET /cafes/:id
-
-- Feature: Rate café
-
-  - Add form input to view café page
-  - Create POST /ratings
-  - States for add & update ratings
-
-- Feature: Home page
-
-- Feature: Create account
-
-  - Implement register page + form
-  - Create POST /users/register endpoint
-
-- Feature: Login
-
-  - Implement login page + form
-  - Create POST /users/login endpoint
-
-- Feature: Implement JWT tokens
-
-  - Server: Update expected requests / responses on protected endpoints
-  - Client: Store JWT in local storage, include JWT on axios calls
-
-- Bug fixes
-
-- DEMO DAY
+##
 
 ## Nice-to-haves
 
-- Integrate Google Places / Maps
-  - View more details about a café
-  - Visual radius functionality
-- Forgot password functionality
-- Ability to add a café
-- Elite status badging for users and cafés: Gamify user ratings
-- Expand rating system
-  - Coffee
-  - Ambiance
-  - Staff
-- Expanded user information: full name, favorite café
-- Unit and Integration Tests
+- Email automation
+- Admin dashboard
+- User Log in

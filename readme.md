@@ -1,16 +1,21 @@
 # Project Title
 
+Unscripted Scribbles
+
 ## Overview
 
-What is your app? Brief description in a couple of sentences.
+A MERN Blog
 
 ### Problem
 
-Why is your app needed? Background information around any pain points or other reasons.
+I have a habit of buying too many notebooks, only to leave them half-used and collecting dust. I also waste more paper than I’d like to admit. With inflation pinching my wallet and my penchant for paper wasting, I need a budget-friendly, eco-conscious solution. Enter: a much needed digital platform.
 
 ### User Profile
 
-Who will use your app? How will they use it? Any special considerations that your app must take into account.
+- Me:
+  - I'll use the app to write and share.
+- Readers:
+  - Will use the app for entertainment, to love or hate, criticize or relate. Maybe no one will use it all! Regardless, to each their own.
 
 ### Features
 
