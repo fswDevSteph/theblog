@@ -4,7 +4,7 @@ Unscripted Scribbles
 
 ## Overview
 
-A MERN Blog
+Unscripted Scribbles is a digital trash can that homes a myriad of expressions; thoughts, experiences, perspectives, contemplations, questions, etc... It's a blog.
 
 ### Problem
 
@@ -19,42 +19,157 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 
 ### Features
 
-List the functionality that your app will include. These can be written as user stories or descriptions with related details. Do not describe _how_ these features are implemented, only _what_ needs to be implemented.
+- As a user, I want a blog that I can post blogs to
+- As a user, I want home, about, blog and contact sections or pages
+- As a user, I want my homepage to display a featured post
+- As a user, I want my homepage to display other blogs below the feature post
+- As a user, I want the blogs below the feature post to only share a few sentences and then have a read more link
+- As a user, I want my blogs to have a title, text content, date stamp, author and image
+- As a user, I want the read more link to display the full blog text
+- As a user, I want readers to be able to like a blog post
+- As a user, I want readers to be able to comment on a blog post
+- As a user, I want to subscribe to an email letter
+- As a user, I want to contact the blog by email
+- As a user, I just want to run a script to create and delete posts.
 
 ## Implementation
 
-### Tech Stack
+### Frontend
 
-List technologies that will be used in your app, including any libraries to save time or provide more functionality. Be sure to research any potential limitations.
+- **React**: ^18.2.0
+- **React DOM**: ^18.2.0
+- **React Router DOM**: ^6.23.1
+- **SASS**: ^1.77.6
+- **Axios**: ^1.7.2
+- **Font Awesome**:
+  - **@fortawesome/fontawesome-svg-core**: ^6.5.2
+  - **@fortawesome/free-brands-svg-icons**: ^6.5.2
+  - **@fortawesome/react-fontawesome**: ^0.2.2
+- **Vite**: ^5.3.2 (Build tool)
+
+### Backend
+
+- **Express**: ^4.19.2
+- **Mongoose**: ^8.4.4 (MongoDB ODM)
+- **MongoDB**: ^6.7.0
+- **JWT**: ^9.0.2 (Authentication)
+- **Bcrypt**: ^2.4.3 (Password hashing)
+- **Multer**: ^1.4.5-lts.1 (File upload)
+- **GridFS Stream**: ^1.1.1 (File storage)
+- **Body-Parser**: ^1.20.2
+- **Cors**: ^2.8.5
+- **Dotenv**: ^16.4.5 (Environment variables)
+
+### Development Tools
+
+- **ESLint**: ^8.57.0 (Linting)
+  - **eslint-plugin-react**: ^7.34.1
+  - **eslint-plugin-react-hooks**: ^4.6.0
+  - **eslint-plugin-react-refresh**: ^0.4.6
+- **@vitejs/plugin-react**: ^4.2.1 (Vite plugin for React)
+
+### Other Libraries
+
+- **dotenv**: ^16.4.5
+- **cors**: ^2.8.5
+- **ejs**: ^3.1.10
+- **base64-arraybuffer**: ^1.0.2
+- **buffer**: ^6.0.3
+- **buffer-from**: ^1.1.2
 
 ### APIs
 
-List any external sources of data that will be used in your app.
+- No external APIs yet
 
 ### Sitemap
 
-List the pages of your app with brief descriptions. You can show this visually, or write it out.
+- Home
+- About
+- Blogs
+- Contact
 
-### Mockups
+### Mockup for blog
 
-Provide visuals of your app's screens. You can use tools like Figma or pictures of hand-drawn sketches.
+#### Home Page
+
+![](sketchblog.png)
 
 ### Data
 
-Describe your data and the relationships between them. You can show this visually using diagrams, or write it out.
+#### Post
 
-### Endpoints
+The `Post` model includes:
 
-List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
+- `title` (String, required): The title of the blog post
+- `content` (String, required): The content of the blog post
+- `author` (String, required): The author of the blog post
+- `date` (Date, required): The date the blog post was created
+- `image` (Buffer): The image data for the blog post
+- `imageUrl` (String): The URL of the image
+- `likes` (Number, default: 0): The number of likes the post has received
+- `featured` (Boolean, default: false): Indicates if the post is featured
+
+#### Subscribe
+
+The `Subscribe` feature currently collects consent, emails and names in a json file.
+
+### Endpoints examples
+
+**GET /**
+Get all posts
+Response:
+[
+{
+"_id": "60c72b2f5f1b2c001c8e4d1a",
+"title": "My First Blog Post",
+"content": "This is the content of the first blog post.",
+"author": "Author Name",
+"date": "2023-07-05T00:00:00.000Z",
+"image": {
+"data": "<image data>",
+"contentType": "image/png"
+},
+"likes": 0,
+"featured": false
+}
+]
+
+**GET /:id**
+Get single post
+Response:
+{
+"\_id": "60c72b2f5f1b2c001c8e4d1a",
+"title": "My First Blog Post",
+"content": "This is the content of the first blog post.",
+"author": "Author Name",
+"date": "2023-07-05T00:00:00.000Z",
+"image": {
+"data": "<image data>",
+"contentType": "image/png"
+},
+"likes": 0,
+"featured": false
+}
+
+**POST /:id/like**
+Like a post
+Parameters:
+
+id: Post ID
+Response:
+{
+"likes": 1
+}
+
+**DELETE /:id**
 
 ### Auth
 
-Does your project include any login or user profile functionality? If so, describe how authentication/authorization will be implemented.
+N/A
 
-## Roadmap
-
-Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
+##
 
 ## Nice-to-haves
 
-Your project will be marked based on what you committed to in the above document. Under nice-to-haves, you can list any additional features you may complete if you have extra time, or after finishing.
+- Admin dashboard
+- User Log in
