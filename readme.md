@@ -4,11 +4,11 @@ Unscripted Scribbles
 
 ## Overview
 
-Unscripted Scribbles is a digital trash can that homes a myriad of expressions; thoughts, experiences, perspectives, contemplations, questions, etc... It's a blog.
+Unscripted Scribbles is a digital trash can that homes a myriad of expressions; thoughts, experiences, perspectives, contemplations, questions, etc... It's a blog - for now.
 
 ### Problem
 
-I have a habit of buying too many notebooks, only to leave them half-used and collecting dust. I also waste more paper than I’d like to admit. With inflation pinching my wallet and my penchant for paper wasting, I need a budget-friendly, eco-conscious solution. Enter: a much needed digital platform.
+I have a habit of buying too many notebooks, only to leave them half-used and collecting dust. I also waste more paper than I’d like to admit. With inflation pinching everybody's wallet and my penchant for paper wasting, I need a budget-friendly, eco-conscious solution to write. Enter: a much needed digital platform.
 
 ### User Profile
 
@@ -19,18 +19,14 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 
 ### Features
 
-- As a user, I want a blog that I can post blogs to
-- As a user, I want home, about, blog and contact sections or pages
-- As a user, I want my homepage to display a featured post
-- As a user, I want my homepage to display other blogs below the feature post
-- As a user, I want the blogs below the feature post to only share a few sentences and then have a read more link
+- As a user, I want a blog that only I can post blogs to
+- As a user, I want home, about and blog page
+- As a user, I want my homepage to show some blogs
 - As a user, I want my blogs to have a title, text content, date stamp, author and image
-- As a user, I want the read more link to display the full blog text
 - As a user, I want readers to be able to like a blog post
-- As a user, I want readers to be able to comment on a blog post
 - As a user, I want to subscribe to an email letter
-- As a user, I want to contact the blog by email
-- As a user, I just want to run a script to create and delete posts.
+- As a user, I want to contact the blog by email and receive a reply
+- As a user, as the blogger, I just want to run a script to create or delete posts.
 
 ## Implementation
 
@@ -83,16 +79,14 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 
 ### Sitemap
 
-- Home
-- About
-- Blogs
-- Contact
+- Home - renders a bit of everything the site has
+- About - Has img, about text and contact form
+- Blog - has all the blogs
+- Contact - is a section or page with a contact form
 
 ### Mockup for blog
 
 #### Home Page
-
-![](sketchblog.png)
 
 ### Data
 
@@ -115,53 +109,47 @@ The `Subscribe` feature currently collects consent, emails and names in a json f
 
 ### Endpoints examples
 
-**GET /**
-Get all posts
-Response:
-[
-{
-"_id": "60c72b2f5f1b2c001c8e4d1a",
-"title": "My First Blog Post",
-"content": "This is the content of the first blog post.",
-"author": "Author Name",
-"date": "2023-07-05T00:00:00.000Z",
-"image": {
-"data": "<image data>",
-"contentType": "image/png"
-},
-"likes": 0,
-"featured": false
-}
-]
+**Get All Posts:**
+HTTP Method: GET
+Endpoint: /api/posts
+Description: Retrieves all blog posts from the database.
 
-**GET /:id**
-Get single post
-Response:
-{
-"\_id": "60c72b2f5f1b2c001c8e4d1a",
-"title": "My First Blog Post",
-"content": "This is the content of the first blog post.",
-"author": "Author Name",
-"date": "2023-07-05T00:00:00.000Z",
-"image": {
-"data": "<image data>",
-"contentType": "image/png"
-},
-"likes": 0,
-"featured": false
-}
+**Get Single Post:**
+HTTP Method: GET
+Endpoint: /api/posts/:id
+Description: Retrieves a single blog post by its ID.
 
-**POST /:id/like**
-Like a post
-Parameters:
+**Create a New Post:**
+HTTP Method: POST
+Endpoint: /api/posts
+Description: Creates a new blog post.
 
-id: Post ID
-Response:
-{
-"likes": 1
-}
+--implementation:
 
-**DELETE /:id**
+1. Add a resized img to upload folder (backend>uploads)
+2. Navigate to upload script (backend>insertSinglePostData.js)
+3. Paste edited blog content into respective fields (make sure to edit file image name for seo and the extension so it matches what is in the uploads folder)
+4. run 'node insertSinglePostData.js' in terminal to add data to DB and verify it renders on page.
+5. You can inspect the post in the browser to get the post ID and delete a post using the script that way but if you have access to compass that is much more time effective.
+
+**Like a Post:**
+HTTP Method: POST
+Endpoint: /api/posts/:id/like
+Description: Likes a specific blog post by its ID.
+
+**Set a Post as Featured:**
+HTTP Method: PUT
+Endpoint: /api/posts/set-featured/:id
+Description: Sets a specific blog post as featured by its ID.
+
+--implementation:
+
+1. While following the implementation steps above to Create A New Post, edit the 'feature:' key to have a value of true
+
+**Delete a Post:**
+HTTP Method: DELETE
+Endpoint: /api/posts/:id
+Description: Deletes a specific blog post by its ID when running the script. Though, since you probably have compass open, just click delete in the GUI on the post you want to remove.
 
 ### Auth
 
@@ -173,3 +161,5 @@ N/A
 
 - Admin dashboard
 - User Log in
+- Comments
+- img api (still involves several steps to optimize for loading)
