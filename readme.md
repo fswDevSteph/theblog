@@ -162,4 +162,5 @@ N/A
 - Admin dashboard
 - User Log in
 - Comments
+- Store
 - img api (still involves several steps to optimize for loading)
