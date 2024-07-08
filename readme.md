@@ -86,8 +86,6 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 
 ### Mockup for blog
 
-#### Home Page
-
 ### Data
 
 #### Post
@@ -99,7 +97,6 @@ The `Post` model includes:
 - `author` (String, required): The author of the blog post
 - `date` (Date, required): The date the blog post was created
 - `image` (Buffer): The image data for the blog post
-- `imageUrl` (String): The URL of the image
 - `likes` (Number, default: 0): The number of likes the post has received
 - `featured` (Boolean, default: false): Indicates if the post is featured
 
