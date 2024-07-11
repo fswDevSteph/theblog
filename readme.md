@@ -42,27 +42,18 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
   - **@fortawesome/free-brands-svg-icons**: ^6.5.2
   - **@fortawesome/react-fontawesome**: ^0.2.2
 - **Vite**: ^5.3.2 (Build tool)
+- *Dotenv**: ^16.4.5 (Environment variables)
 
 ### Backend
 
 - **Express**: ^4.19.2
 - **Mongoose**: ^8.4.4 (MongoDB ODM)
 - **MongoDB**: ^6.7.0
-- **JWT**: ^9.0.2 (Authentication)
-- **Bcrypt**: ^2.4.3 (Password hashing)
 - **Multer**: ^1.4.5-lts.1 (File upload)
 - **GridFS Stream**: ^1.1.1 (File storage)
 - **Body-Parser**: ^1.20.2
 - **Cors**: ^2.8.5
 - **Dotenv**: ^16.4.5 (Environment variables)
-
-### Development Tools
-
-- **ESLint**: ^8.57.0 (Linting)
-  - **eslint-plugin-react**: ^7.34.1
-  - **eslint-plugin-react-hooks**: ^4.6.0
-  - **eslint-plugin-react-refresh**: ^0.4.6
-- **@vitejs/plugin-react**: ^4.2.1 (Vite plugin for React)
 
 ### Other Libraries
 
@@ -75,7 +66,6 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 
 ### APIs
 
-- No external APIs yet
 
 ### Sitemap
 
@@ -102,7 +92,10 @@ The `Post` model includes:
 
 #### Subscribe
 
-The `Subscribe` feature currently collects consent, emails and names in a json file.
+The `Subscribe` model includes:
+- `name` { type: String, required: true }: The subscribers name
+- `email` { type: String, required: true, unique: true }: The subscribers email
+- `consentDate` { type: Date, default: Date.now }: A record of the subscribers consent date
 
 ### Endpoints examples
 
@@ -120,6 +113,12 @@ Description: Retrieves a single blog post by its ID.
 HTTP Method: POST
 Endpoint: /api/posts
 Description: Creates a new blog post.
+
+**Subscriber:**
+HTTP Method: POST
+Endpoint: /api/psubscribe
+Description: handle user subscription
+
 
 --implementation:
 
