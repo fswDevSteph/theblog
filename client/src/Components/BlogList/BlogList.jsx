@@ -7,7 +7,7 @@ import axios from 'axios';
 import BlogPost from '../BlogPost/BlogPost';
 import './BlogList.scss';
 
-const BlogList = ({ isPreview = true, limit = null }) => {
+const BlogList = ({ isPreview = true, limit = null, excludeFeatured = false }) => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -17,6 +17,11 @@ const BlogList = ({ isPreview = true, limit = null }) => {
                 const response = await axios.get('http://localhost:5050/api/posts');
                 console.log('Fetched posts:', response.data);
                 let sortedPosts = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                if (excludeFeatured) {
+                    sortedPosts = sortedPosts.filter(post => !post.featured);
+                }
+
                 if (limit) {
                     sortedPosts = sortedPosts.slice(0, limit);
                 }
@@ -28,7 +33,7 @@ const BlogList = ({ isPreview = true, limit = null }) => {
         };
 
         fetchPosts();
-    }, [limit]);
+    }, [limit, excludeFeatured]);
 
     return (
         <div className="blog-list">

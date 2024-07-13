@@ -19,7 +19,7 @@ const Home = () => {
                 <FeaturePost />
                 <Subscribe />
                 <div className="home__blog-content">
-                    <BlogList isPreview={true} limit={5} />
+                    <BlogList isPreview={true} limit={5} excludeFeatured={true} />
                     <ContactForm />
                 </div>
                 <Sidebar />
