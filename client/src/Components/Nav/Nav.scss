@@ -1,0 +1,62 @@
+@use '../styles/variables.scss' as *;
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  font-weight: bold;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 0.25px solid black;
+  border-bottom: 0.25px solid black;
+  padding: 0.5rem 0;
+  margin-bottom: 2.5rem;
+  width: 100%;
+
+  &__list {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    font-size: 0.875rem;
+    padding: 0 0.75rem;
+    text-align: center;
+    position: relative;
+
+    @include tablet {
+      font-size: 1rem;
+      padding: 0 1rem;
+    }
+
+    @include desktop {
+      font-size: 1.25rem;
+      padding: 0 1.25rem;
+    }
+
+    &--with-divider::after {
+      content: '|';
+      position: absolute;
+      right: -0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: black;
+      height: auto;
+    }
+  }
+
+  &__item:last-child::after {
+    content: '';
+  }
+}
+
+.active {
+  color: red;
+}
