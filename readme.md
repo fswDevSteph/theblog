@@ -42,7 +42,7 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
   - **@fortawesome/free-brands-svg-icons**: ^6.5.2
   - **@fortawesome/react-fontawesome**: ^0.2.2
 - **Vite**: ^5.3.2 (Build tool)
-- *Dotenv**: ^16.4.5 (Environment variables)
+- \*Dotenv\*\*: ^16.4.5 (Environment variables)
 
 ### Backend
 
@@ -65,7 +65,6 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 - **buffer-from**: ^1.1.2
 
 ### APIs
-
 
 ### Sitemap
 
@@ -93,6 +92,7 @@ The `Post` model includes:
 #### Subscribe
 
 The `Subscribe` model includes:
+
 - `name` { type: String, required: true }: The subscribers name
 - `email` { type: String, required: true, unique: true }: The subscribers email
 - `consentDate` { type: Date, default: Date.now }: A record of the subscribers consent date
@@ -118,7 +118,6 @@ Description: Creates a new blog post.
 HTTP Method: POST
 Endpoint: /api/psubscribe
 Description: handle user subscription
-
 
 --implementation:
 
@@ -160,4 +159,3 @@ N/A
 - Comments
 - Store
 - img api (still involves several steps to optimize for loading)
-
