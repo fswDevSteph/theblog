@@ -1,0 +1,31 @@
+@use '../../Components/styles/variables.scss' as *;
+
+.sidebar {
+  &__social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 0.5px solid #333;
+    border-bottom: 0.5px solid #333;
+    padding: 0.625rem 0;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+
+    h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    &-icons {
+      padding: 0.5rem 0rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    &-icon {
+      color: #333;
+      transition: color 0.3s ease;
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,0 +1,74 @@
+@use '../styles/variables.scss' as *;
+
+.featured-post {
+  border: 1px solid #000;
+  width: 100%;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  position: relative;
+
+  &__label {
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #333;
+    background-color: #fff;
+    position: absolute;
+    top: -28px;
+    left: -1px;
+
+    z-index: 10;
+    @include tablet {
+      padding: 0.5rem 1rem;
+    }
+    @include desktop {
+      top: -36px;
+      left: -1px;
+      font-size: 20px;
+    }
+  }
+
+  &__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    background-color: #f0f0f0;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  &__content {
+    padding: 1rem;
+  }
+
+  &__date {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  &__text {
+    font-size: 1rem;
+    color: #333;
+  }
+}

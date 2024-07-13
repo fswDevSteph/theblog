@@ -1,0 +1,38 @@
+@use '../../Components/styles/variables.scss' as *;
+
+.blogs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 0;
+
+  @include tablet {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  @include desktop {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  &__post {
+    width: 100%;
+
+    @include tablet {
+      flex: 1 1 calc(50% - 1.5rem);
+    }
+
+    @include desktop {
+      flex: 1 1 calc(33.33% - 2rem);
+    }
+    .post__image {
+      width: 50%;
+      height: 1rem;
+      object-fit: cover;
+    }
+  }
+}
