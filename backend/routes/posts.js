@@ -177,22 +177,6 @@ router.post('/:id/like', async (req, res) => {
     }
 });
 
-//! Get featured post
-router.get('/featured', async (req, res) => {
-    try {
-        const featuredPost = await Post.findOne({ featured: true });
-        if (!featuredPost) {
-            console.log('No featured post found');
-            return res.status(404).json({ message: 'No featured post found' });
-        }
-        console.log('Featured post found:', featuredPost);
-        res.json(featuredPost);
-    } catch (err) {
-        console.error('Error fetching featured post:', err);
-        res.status(500).json({ message: 'Internal server error', error: err.message });
-    }
-});
-
 //! Delete post by ID
 router.delete('/:id', async (req, res) => {
     console.log('DELETE request received for post ID:', req.params.id);
