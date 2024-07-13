@@ -1,6 +1,6 @@
 # Project Title
 
-Unscripted Scribbles
+The Blog
 
 ## Overview
 
@@ -29,6 +29,13 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 - As a user, as the blogger, I just want to run a script to create or delete posts.
 
 ## Implementation
+
+- Clone the project
+- CD into the project
+- CD into the backend folder and run 'npm i' to install all backend dependencies
+- Start the server: 'node --watch server.js'
+- CD into the client folder and run 'npm i' to install all frontend dependencies
+- Display project in browser: run 'npm run dev'
 
 ### Frontend
 
@@ -76,7 +83,7 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
 
 ### APIs
 
-- No external APIs yet
+- This project uses [EmailJS](https://www.emailjs.com/) to receive contact form submissions and auto respond until I can personally respond
 
 ### Sitemap
 
