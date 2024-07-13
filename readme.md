@@ -4,11 +4,11 @@ Unscripted Scribbles
 
 ## Overview
 
-Unscripted Scribbles is a digital trash can that homes a myriad of expressions; thoughts, experiences, perspectives, contemplations, questions, etc... It's a blog - for now.
+The Blog is a digital trash can that homes a myriad of expressions; thoughts, experiences, perspectives, contemplations, questions, etc... It's a blog - for now.
 
 ### Problem
 
-I have a habit of buying too many notebooks, only to leave them half-used and collecting dust. I also waste more paper than I’d like to admit. With inflation pinching everybody's wallet and my penchant for paper wasting, I need a budget-friendly, eco-conscious solution to write. Enter: a much needed digital platform.
+I have a habit of buying too many notebooks, only to leave them half-used and collecting dust. I also waste more paper than I’d like to admit. With inflation pinching everybody's wallet and my penchant for paper wasting, I need a budget-friendly, eco-conscious solution to write. Enter: a much needed digital platform. Oh! And, I hired someone to create a blog for me but somehow my information got into hackers hands and I became a victim of fraud to the tune of 4g so, I decided to learn how to build software myself.
 
 ### User Profile
 
@@ -42,6 +42,7 @@ I have a habit of buying too many notebooks, only to leave them half-used and co
   - **@fortawesome/free-brands-svg-icons**: ^6.5.2
   - **@fortawesome/react-fontawesome**: ^0.2.2
 - **Vite**: ^5.3.2 (Build tool)
+- **emailjs** : "^3.2.0"
 
 ### Backend
 
