@@ -34,12 +34,24 @@
     font-size: 0.75rem;
     color: #666;
     margin-bottom: 0.5rem;
+    @include tablet {
+      font-size: 0.9rem;
+    }
+    @include desktop {
+      font-size: 1rem;
+    }
   }
 
   &__date {
     font-size: 0.75rem;
     color: #666;
     margin-bottom: 0.5rem;
+    @include tablet {
+      font-size: 0.9rem;
+    }
+    @include desktop {
+      font-size: 1rem;
+    }
   }
 
   &__title {
@@ -47,6 +59,9 @@
     font-weight: bold;
     margin-bottom: 0.5rem;
     @include tablet {
+      font-size: 1.5rem;
+    }
+    @include desktop {
       font-size: 1.75rem;
     }
   }
