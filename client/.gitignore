@@ -7,15 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependency directories
+node_modules/
+dist/
+dist-ssr/
 *.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
@@ -23,4 +24,36 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment variables
 .env
+
+# System files
+.bash_history
+.CFUserTextEncoding
+.dbshell
+.viminfo
+
+# Temporary files
+tmp/
+temp/
+*.pid
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# MongoDB logs
+*.log
+*.gz
+
+# Miscellaneous
+public/
+build/
+coverage/
+pids/
+*.pid
+
+# IDE settings
+.idea/
+.vscode/
