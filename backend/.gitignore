@@ -6,16 +6,18 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.log.gz
 
-node_modules
-dist
-dist-ssr
+# Dependency directories
+node_modules/
+dist/
+dist-ssr/
 *.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
@@ -23,4 +25,59 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment variables
 .env
+
+# System files
+.bash_history
+.CFUserTextEncoding
+.dbshell
+.viminfo
+.lesshst
+.mysql_history
+
+# Temporary files
+tmp/
+temp/
+*.pid
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# MongoDB related
+*.log
+*.gz
+.mongorc.js
+
+# Miscellaneous
+public/
+build/
+coverage/
+pids/
+*.pid
+
+# IDE settings
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Config files that shouldn't be shared
+.gitconfig
+.gitignore_global
+
+# Other
+nodemon.json
+jdbc-adapter-server.jar
+meta.json
+dbclient.log
+history.sql

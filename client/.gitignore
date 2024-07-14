@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.log.gz
 
 # Dependency directories
 node_modules/
@@ -32,6 +33,8 @@ dist-ssr/
 .CFUserTextEncoding
 .dbshell
 .viminfo
+.lesshst
+.mysql_history
 
 # Temporary files
 tmp/
@@ -43,9 +46,10 @@ temp/
 *.sqlite
 *.sqlite3
 
-# MongoDB logs
+# MongoDB related
 *.log
 *.gz
+.mongorc.js
 
 # Miscellaneous
 public/
@@ -57,3 +61,23 @@ pids/
 # IDE settings
 .idea/
 .vscode/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Config files that shouldn't be shared
+.gitconfig
+.gitignore_global
+
+# Other
+nodemon.json
+jdbc-adapter-server.jar
+meta.json
+dbclient.log
+history.sql
