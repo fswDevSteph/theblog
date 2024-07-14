@@ -10,6 +10,15 @@ The Blog is a digital trash can that homes a myriad of expressions; thoughts, ex
 
 https://github.com/fswDevSteph/theblog
 
+## To Run Project:
+
+- Clone the project
+- CD into the project
+- CD into the backend folder and run 'npm i' to install all backend dependencies
+- Start the server: 'node --watch server.js'
+- CD into the client folder and run 'npm i' to install all frontend dependencies
+- Display project in browser: run 'npm run dev' and click the link that populates in your terminal to open the project in browser
+
 ## Upcoming Iterations
 
 ### Iteration 1
