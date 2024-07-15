@@ -25,14 +25,13 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 //! 1. After editing, paste single post data here
 //! in terminal, run: node insertSinglePostData.js
 const singlePost = {
-    title: "Lorem ipsum dolor sit amet",
-    content: `Lorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit amet.`,
-    author: "Lorem ipsum",
-    //displays on page as month, day, year
-    date: new Date("2024-07-09"),
-    category: "Dating",
+    title: "Jet-Setting Adventures: Tips for the Modern Traveler",
+    content: `Traveling can be both exciting and daunting. Here are some essential tips to make your journey smoother and more enjoyable. From packing light to staying safe, these tips will help you become a savvy traveler.`,
+    author: "Globe-Trotter Grace",
+    date: new Date("2024-07-11"),
+    category: "travel",
     image: {
-        data: fs.readFileSync(path.join(__dirname, 'uploads', 'bumble-love.jpg')),
+        data: fs.readFileSync(path.join(__dirname, 'uploads', 'travel3.jpg')), // 🌈 Ensure the image name matches the uploaded file
         contentType: 'image/jpeg'
     },
     featured: false
