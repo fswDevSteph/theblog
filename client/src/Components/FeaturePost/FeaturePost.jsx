@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './FeaturePost.scss';
 
@@ -48,6 +49,7 @@ const FeaturePost = () => {
                 {featuredPost.likes !== undefined && (
                     <p className="featured-post__likes">Likes: {featuredPost.likes}</p>
                 )}
+                <Link to={`/post/${featuredPost._id}`} className="featured-post__read-more">Continue Reading...</Link>
             </div>
         </div>
     );

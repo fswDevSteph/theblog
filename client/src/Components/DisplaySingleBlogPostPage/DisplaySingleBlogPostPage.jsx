@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { getPost, likePost, getRelatedPosts } from '../../services/api';
 import Header from '../Header/Header';
@@ -12,13 +13,27 @@ const DisplaySingleBlogPostPage = () => {
     const [error, setError] = useState(null);
     const { id } = useParams();
 
+
+    const renderContent = (content) => {
+        if (typeof content === 'string') {
+            return <ReactMarkdown>{content}</ReactMarkdown>;
+        } else if (content && typeof content === 'object' && content.hasOwnProperty('content')) {
+            return <ReactMarkdown>{content.content}</ReactMarkdown>;
+        } else {
+            console.error('Unexpected content format:', content);
+            return <p>Unable to display content</p>;
+        }
+    };
+
     useEffect(() => {
         const fetchPostAndRelated = async () => {
             try {
                 const postResponse = await getPost(id);
+                console.log('Fetched post:', postResponse.data);
                 setPost(postResponse.data);
 
                 const relatedResponse = await getRelatedPosts(id);
+                console.log('Fetched related posts:', relatedResponse.data);
                 setRelatedPosts(Array.isArray(relatedResponse.data) ? relatedResponse.data : []);
             } catch (error) {
                 console.error('Error fetching post or related posts:', error);
@@ -41,6 +56,7 @@ const DisplaySingleBlogPostPage = () => {
             setError('Failed to like post');
         }
     };
+
 
     const renderImage = useMemo(() => (imageData, className = 'single-blog-post-page__image') => {
         if (!imageData || !imageData.data || !imageData.contentType) {
@@ -65,7 +81,9 @@ const DisplaySingleBlogPostPage = () => {
                 <h1 className="single-blog-post-page__title">{post.title}</h1>
                 <p className="single-blog-post-page__author">Author: {post.author}</p>
                 <p className="single-blog-post-page__date">Date: {new Date(post.date).toLocaleDateString()}</p>
-                <div className="single-blog-post-page__content">{post.content}</div>
+                <div className="single-blog-post-page__content">
+                    {renderContent(post.content)}
+                </div>
                 <div className="single-blog-post__likes-section">
                     <button className="single-blog-post__like-button" onClick={handleLike}>
                         Like
@@ -83,7 +101,9 @@ const DisplaySingleBlogPostPage = () => {
                                 <div key={relatedPost._id} className="related-post">
                                     {relatedPost.image && renderImage(relatedPost.image, 'single-blog-post-page__image')}
                                     <h3 className="related-post__title">{relatedPost.title}</h3>
-                                    <p className="related-post__excerpt">{relatedPost.content.substring(0, 100)}...</p>
+                                    <div className="related-post__excerpt">
+                                        {renderContent(relatedPost.content ? relatedPost.content.substring(0, 100) + '...' : '')}
+                                    </div>
                                 </div>
                             ))}
                         </div>
