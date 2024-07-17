@@ -49,6 +49,8 @@ router.get('/', async (req, res) => {
 router.get('/featured', async (req, res) => {
     try {
         const featuredPost = await Post.findOne({ featured: true });
+        console.log('Featured post query result:', featuredPost);
+
         if (!featuredPost) {
             console.log('No featured post found');
             return res.status(404).json({ message: 'No featured post found' });
