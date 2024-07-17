@@ -102,7 +102,8 @@ const DisplaySingleBlogPostPage = () => {
                                     {relatedPost.image && renderImage(relatedPost.image, 'single-blog-post-page__image')}
                                     <h3 className="related-post__title">{relatedPost.title}</h3>
                                     <div className="related-post__excerpt">
-                                        {renderContent(relatedPost.content ? relatedPost.content.substring(0, 100) + '...' : '')}
+                                        {renderContent(relatedPost.content)}
+
                                     </div>
                                 </div>
                             ))}
