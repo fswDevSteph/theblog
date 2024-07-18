@@ -22,8 +22,14 @@
     padding: 1rem 0.5rem 2rem 0;
     border: none;
     border-bottom: 1px solid black;
-
     margin-bottom: 1rem;
+    font-size: 1rem;
+    @include tablet {
+      font-size: 1.125rem;
+    }
+    @include desktop {
+      font-size: 1.375rem;
+    }
   }
 
   .contact-form__textarea {
