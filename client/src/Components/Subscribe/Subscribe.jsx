@@ -35,7 +35,7 @@ const Subscribe = () => {
     return (
         <div className="sidebar__subscribe">
             <h3 className="sidebar__subscribe-title">
-                Never miss a post.
+                Let The Blog Come to You!
             </h3>
             <form onSubmit={handleSubmit} className="sidebar__subscribe-form">
                 <div className="sidebar__subscribe-input-container">
