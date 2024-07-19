@@ -10,3 +10,13 @@ services:
         value: mongodb+srv://thrivethroughtruthcreator:MongoDBThriveThroughTruth@thrivethroughtruth-blog.7dc8sxu.mongodb.net/<your-database-name>?retryWrites=true&w=majority
       - key: PORT
         value: 5050
+
+  - type: web
+    name: theblog-frontend
+    env: static
+    plan: free
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://theblog-1-u31z.onrender.com/api
