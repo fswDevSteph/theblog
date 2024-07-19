@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: theblog-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://thrivethroughtruthcreator:MongoDBThriveThroughTruth@thrivethroughtruth-blog.7dc8sxu.mongodb.net/<your-database-name>?retryWrites=true&w=majority
+      - key: PORT
+        value: 5050
