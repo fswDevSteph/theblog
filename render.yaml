@@ -11,7 +11,7 @@ services:
       - key: PORT
         value: 5050
 
-  - type: web
+   - type: web
     name: theblog-frontend
     env: static
     plan: free
