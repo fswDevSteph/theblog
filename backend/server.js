@@ -15,7 +15,11 @@ const PORT = process.env.PORT || 5050;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://theblog-hun6.onrender.com',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 
 app.use(express.json());
