@@ -1,5 +1,5 @@
 services:
-  - type: web
+  - type: web service
     name: theBlog-api
     env: node
     plan: free
