@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5050',
+    baseURL: 'https://theblog-fe.onrender.com',
     timeout: 10000
 });
 
