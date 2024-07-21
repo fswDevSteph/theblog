@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/posts', postRoutes);
 app.use('/api/subscribe', subscribeRoutes);
 
-const mongoURI = process.env.MONGO_URI;
+const mongoURI = process.env.MONGODB_URI;
 
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
