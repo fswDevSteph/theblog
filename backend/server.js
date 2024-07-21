@@ -13,10 +13,6 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 const mongoURI = process.env.MONGODB_URI;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
 console.log(`Connecting to MongoDB with URI: ${mongoURI}`);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,8 +35,11 @@ if (!mongoURI) {
     process.exit(1);
 }
 
+mongoose.set('debug', true); // Enable mongoose debug mode
+
 mongoose.connect(mongoURI, {
-    serverSelectionTimeoutMS: 5000
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
 })
     .then(() => console.log('MongoDB connected successfully'))
     .catch(err => {
@@ -49,7 +48,24 @@ mongoose.connect(mongoURI, {
         process.exit(1);
     });
 
+// MongoDB connection event listeners
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('MongoDB disconnected');
+});
+
+mongoose.connection.on('reconnected', () => {
+    console.log('MongoDB reconnected');
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ message: 'Something went wrong!' });
+    res.status(500).json({ message: 'Something went wrong!', error: err.message });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
