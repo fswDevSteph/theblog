@@ -11,6 +11,9 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5050;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -46,6 +49,4 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Something went wrong!' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+
