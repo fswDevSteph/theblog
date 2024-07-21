@@ -34,8 +34,7 @@ app.use('/api/subscribe', subscribeRoutes);
 const mongoURI = process.env.MONGODB_URI;
 
 mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+
     serverSelectionTimeoutMS: 5000
 })
     .then(() => console.log('MongoDB connected successfully'))
