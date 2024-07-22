@@ -7,7 +7,7 @@ const Blogs = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('http://localhost:5050/api/posts');
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/posts`);
                 setPosts(response.data);
             } catch (error) {
                 console.error('Error fetching posts:', error);
@@ -36,7 +36,7 @@ const Blogs = () => {
                     <p>{post.content}</p>
                     {post.imageUrl ? (
                         <img
-                            src={`http://localhost:5050/uploads/${post.imageUrl}`}
+                            src={`${import.meta.env.VITE_API_URL}/uploads/${post.imageUrl}`}
                             alt="Post Image"
                             className="post__image"
                         />

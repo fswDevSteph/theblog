@@ -14,7 +14,8 @@ const BlogList = ({ isPreview = true, limit = null, excludeFeatured = false }) =
         const fetchPosts = async () => {
             try {
                 console.log('Fetching posts...');
-                const response = await axios.get('http://localhost:5050/api/posts');
+                // const response = await axios.get('http://localhost:5050/api/posts');
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/posts`);
                 console.log('Fetched posts:', response.data);
                 let sortedPosts = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
 

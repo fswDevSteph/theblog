@@ -8,7 +8,8 @@ const FeaturePost = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5050/api/posts/featured')
+        // axios.get('http://localhost:5050/api/posts/featured')
+        axios.get(`${import.meta.env.VITE_API_URL}/api/posts/featured`)
             .then(response => {
                 console.log('Featured post data:', response.data);
                 setFeaturedPost(response.data);
