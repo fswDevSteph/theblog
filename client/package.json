@@ -1,6 +1,6 @@
 {
-  "proxy": "http://localhost:5050",
-  "name": "unscripted-scribbles",
+  "proxy": "https://theblog-client.onrender.com",
+  "name": "theblog",
   "private": true,
   "version": "0.0.0",
   "type": "module",
