@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // baseURL: 'http://localhost:5050',
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5050',
     timeout: 10000
 });
+
+console.log('API Base URL:', api.defaults.baseURL);
 
 export const getPosts = async () => {
     return api.get('/api/posts');
