@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema({
     content: { type: String, required: true },
     author: { type: String, required: true },
     date: { type: Date, required: true },
-    images: [{
+    imageData: [{
         data: Buffer,
         contentType: String,
         caption: String

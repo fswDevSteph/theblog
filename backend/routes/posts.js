@@ -26,21 +26,21 @@ router.get('/', async (req, res) => {
         const posts = await Post.find().sort({ date: -1 });
         console.log(`Found ${posts.length} posts`);
 
-        const postsWithImages = posts.map(post => {
-            let images = [];
-            if (post.images && post.images.length > 0) {
-                images = post.images.map(img => ({
+        const postsWithimageData = posts.map(post => {
+            let imageData = [];
+            if (post.imageData && post.imageData.length > 0) {
+                imageData = post.imageData.map(img => ({
                     data: `data:${img.contentType};base64,${img.data.toString('base64')}`,
                     caption: img.caption
                 }));
             }
             return {
                 ...post._doc,
-                images
+                imageData
             };
         });
 
-        // const postsWithImages = posts.map(post => {
+        // const postsWithimageData = posts.map(post => {
         //     let imageData = null;
         //     if (post.image && post.image.data) {
         //         imageData = `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`;
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
         //     };
         // });
 
-        res.json(postsWithImages);
+        res.json(postsWithimageData);
     } catch (err) {
         console.error('Error in GET all posts:', err);
         res.status(500).json({ message: err.message });
@@ -104,7 +104,7 @@ router.get('/related/:id', async (req, res) => {
             _id: { $ne: post._id }
         }).limit(3);
 
-        const relatedPostsWithImages = relatedPosts.map(relatedPost => {
+        const relatedPostsWithimageData = relatedPosts.map(relatedPost => {
             let imageData = null;
             if (relatedPost.image && relatedPost.image.data) {
                 imageData = `data:${relatedPost.image.contentType};base64,${relatedPost.image.data.toString('base64')}`;
@@ -115,7 +115,7 @@ router.get('/related/:id', async (req, res) => {
             };
         });
 
-        res.json(relatedPostsWithImages);
+        res.json(relatedPostsWithimageData);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -147,10 +147,10 @@ router.get('/:id', async (req, res) => {
 });
 
 // //! Create new post with image
-router.post('/', upload.array('images', 5), async (req, res) => { // Allow up to 5 images
+router.post('/', upload.array('imageData', 5), async (req, res) => { // Allow up to 5 imageData
     console.log('POST request received to create a new post');
     try {
-        const images = req.files ? req.files.map(file => ({
+        const imageData = req.files ? req.files.map(file => ({
             data: fs.readFileSync(path.join(__dirname, '../uploads/' + file.filename)),
             contentType: file.mimetype,
             caption: req.body[`caption_${file.fieldname}`] // Assuming you send captions
@@ -162,7 +162,7 @@ router.post('/', upload.array('images', 5), async (req, res) => { // Allow up to
             author: req.body.author,
             date: Date.now(),
             category: req.body.category,
-            images: images
+            imageData: imageData
         });
 
         const newPost = await post.save();
