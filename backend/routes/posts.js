@@ -27,12 +27,10 @@ router.get('/', async (req, res) => {
         console.log(`Found ${posts.length} posts`);
 
         const postsWithimageData = posts.map(post => {
-            let imageData = [];
-            if (post.imageData && post.imageData.length > 0) {
-                imageData = post.imageData.map(img => ({
-                    data: `data:${img.contentType};base64,${img.data.toString('base64')}`,
-                    caption: img.caption
-                }));
+            let imageData = null;
+            if (post.image && post.image.data) {
+                imageData = `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`;
+                console.log('Image Data for post:', post._id, imageData);
             }
             return {
                 ...post._doc,
