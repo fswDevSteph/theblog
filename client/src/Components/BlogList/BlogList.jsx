@@ -46,7 +46,7 @@ const BlogList = ({ isPreview = true, limit = null, excludeFeatured = false }) =
                         title={post.title}
                         date={new Date(post.date).toLocaleDateString()}
                         content={post.content}
-                        imageData={post.imageData}
+                        images={post.images}
                         isPreview={isPreview}
                     />
                 </div>

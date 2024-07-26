@@ -5,10 +5,11 @@ const postSchema = new mongoose.Schema({
     content: { type: String, required: true },
     author: { type: String, required: true },
     date: { type: Date, required: true },
-    image: {
+    images: [{
         data: Buffer,
-        contentType: String
-    },
+        contentType: String,
+        caption: String
+    }],
     likes: {
         type: Number, default: 0
     },

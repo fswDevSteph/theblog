@@ -27,16 +27,30 @@ router.get('/', async (req, res) => {
         console.log(`Found ${posts.length} posts`);
 
         const postsWithImages = posts.map(post => {
-            let imageData = null;
-            if (post.image && post.image.data) {
-                imageData = `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`;
-                console.log('Image Data for post:', post._id, imageData);
+            let images = [];
+            if (post.images && post.images.length > 0) {
+                images = post.images.map(img => ({
+                    data: `data:${img.contentType};base64,${img.data.toString('base64')}`,
+                    caption: img.caption
+                }));
             }
             return {
                 ...post._doc,
-                imageData
+                images
             };
         });
+
+        // const postsWithImages = posts.map(post => {
+        //     let imageData = null;
+        //     if (post.image && post.image.data) {
+        //         imageData = `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`;
+        //         console.log('Image Data for post:', post._id, imageData);
+        //     }
+        //     return {
+        //         ...post._doc,
+        //         imageData
+        //     };
+        // });
 
         res.json(postsWithImages);
     } catch (err) {
@@ -132,28 +146,33 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-//! Create new post with image
-router.post('/', upload.single('image'), async (req, res) => {
+// //! Create new post with image
+router.post('/', upload.array('images', 5), async (req, res) => { // Allow up to 5 images
     console.log('POST request received to create a new post');
     try {
+        const images = req.files ? req.files.map(file => ({
+            data: fs.readFileSync(path.join(__dirname, '../uploads/' + file.filename)),
+            contentType: file.mimetype,
+            caption: req.body[`caption_${file.fieldname}`] // Assuming you send captions
+        })) : [];
+
         const post = new Post({
             title: req.body.title,
             content: req.body.content,
             author: req.body.author,
             date: Date.now(),
             category: req.body.category,
-            image: req.file ? {
-                data: fs.readFileSync(path.join(__dirname, '../uploads/' + req.file.filename)),
-                contentType: req.file.mimetype
-            } : undefined
+            images: images
         });
 
         const newPost = await post.save();
         console.log('New post created:', newPost);
 
-
-        if (req.file) {
-            fs.unlinkSync(path.join(__dirname, '../uploads/' + req.file.filename));
+        // Clean up uploaded files
+        if (req.files) {
+            req.files.forEach(file => {
+                fs.unlinkSync(path.join(__dirname, '../uploads/' + file.filename));
+            });
         }
 
         res.status(201).json(newPost);
@@ -162,6 +181,35 @@ router.post('/', upload.single('image'), async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
+// router.post('/', upload.single('image'), async (req, res) => {
+//     console.log('POST request received to create a new post');
+//     try {
+//         const post = new Post({
+//             title: req.body.title,
+//             content: req.body.content,
+//             author: req.body.author,
+//             date: Date.now(),
+//             category: req.body.category,
+//             image: req.file ? {
+//                 data: fs.readFileSync(path.join(__dirname, '../uploads/' + req.file.filename)),
+//                 contentType: req.file.mimetype
+//             } : undefined
+//         });
+
+//         const newPost = await post.save();
+//         console.log('New post created:', newPost);
+
+
+//         if (req.file) {
+//             fs.unlinkSync(path.join(__dirname, '../uploads/' + req.file.filename));
+//         }
+
+//         res.status(201).json(newPost);
+//     } catch (err) {
+//         console.error('Error creating new post:', err);
+//         res.status(400).json({ message: err.message });
+//     }
+// });
 
 //! Like a post
 router.post('/:id/like', async (req, res) => {
