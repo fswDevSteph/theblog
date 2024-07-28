@@ -58,13 +58,10 @@ const DisplaySingleBlogPostPage = () => {
     };
 
 
-    const renderImage = useMemo(() => (imageData, className = 'single-blog-post-page__image') => {
-        if (!imageData || !imageData.data || !imageData.contentType) {
+    const renderImage = useMemo(() => (imageUrl, className = 'single-blog-post-page__image') => {
+        if (!imageUrl) {
             return null;
         }
-
-        const blob = new Blob([new Uint8Array(imageData.data.data)], { type: imageData.contentType });
-        const imageUrl = URL.createObjectURL(blob);
 
         return <img src={imageUrl} alt="Post" className={className} />;
     }, []);
@@ -77,7 +74,7 @@ const DisplaySingleBlogPostPage = () => {
             <Header />
             <Nav />
             <div className="singleBlogPost__container">
-                {post.image && renderImage(post.image)}
+                {post.imageUrl && renderImage(post.imageUrl)}
                 <h1 className="single-blog-post-page__title">{post.title}</h1>
                 <p className="single-blog-post-page__author">Author: {post.author}</p>
                 <p className="single-blog-post-page__date">Date: {new Date(post.date).toLocaleDateString()}</p>
@@ -99,7 +96,7 @@ const DisplaySingleBlogPostPage = () => {
                         <div className="related-posts__container">
                             {relatedPosts.map(relatedPost => (
                                 <div key={relatedPost._id} className="related-post">
-                                    {relatedPost.image && renderImage(relatedPost.image, 'single-blog-post-page__image')}
+                                    {relatedPost.imageUrl && renderImage(relatedPost.imageUrl, 'single-blog-post-page__image')}
                                     <h3 className="related-post__title">{relatedPost.title}</h3>
                                     <div className="related-post__excerpt">
                                         {renderContent(relatedPost.content)}

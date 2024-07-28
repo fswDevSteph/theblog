@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Post from './models/Post.js';
-import fs from 'fs';
+import cloudinary from './cloudinaryConfig.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -20,7 +20,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 //! 1. After editing, paste single post data here
 //! in terminal, run: node insertSinglePostData.js
 const singlePost = {
-    title: "TESTTESTTESTThe Joy of Getting Lost in a Good Book",
+    title: "TESTTESTTESSSSSSSST",
     content: `
 There's nothing quite like the experience of getting lost in a good book. From the moment you open the cover, you're transported to another world where anything is possible. Here are a few reasons why immersing yourself in a story can be incredibly rewarding:
 
@@ -41,37 +41,23 @@ So, the next time you pick up a book, remember that you're not just reading word
     author: "NOvel NOva Bella",
     date: new Date("2024-07-16"),
     category: "Reading",
-    imageData: [
-        {
-            data: fs.readFileSync(path.join(__dirname, 'uploads', 'books.jpg')),
-            contentType: 'image/jpeg',
-            caption: 'A cozy reading nook'
-        },
-        {
-            data: fs.readFileSync(path.join(__dirname, 'uploads', 'books2.jpg')),
-            contentType: 'image/jpeg',
-            caption: 'A diverse collection of books'
-        }
-    ],
     featured: false
 };
-// image: {
-//     data: fs.readFileSync(path.join(__dirname, 'uploads', 'books2.jpg')),
-//     contentType: 'image/jpeg'
-// },
-// featured: false
-// };
 
-//! Function to insert a single post into MongoDB
 const insertSinglePost = async () => {
     try {
+        // Upload image to Cloudinary
+        const result = await cloudinary.uploader.upload(path.join(__dirname, 'uploads', 'books2.jpg'));
+
+        // Add the Cloudinary URL to the post data
+        singlePost.imageUrl = result.secure_url;
+
         const newPost = new Post(singlePost);
         await newPost.save();
         console.log('Post inserted successfully.');
     } catch (err) {
         console.error('Error inserting post:', err);
     } finally {
-
         mongoose.connection.close();
     }
 };
