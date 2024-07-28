@@ -41,7 +41,7 @@ So, the next time you pick up a book, remember that you're not just reading word
     author: "NOvel NOva Bella",
     date: new Date("2024-07-16"),
     category: "Reading",
-    featured: false
+    featured: true
 };
 
 const insertSinglePost = async () => {

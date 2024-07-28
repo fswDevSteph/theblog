@@ -26,9 +26,9 @@ const FeaturePost = () => {
     return (
         <div className="featured-post feature-post">
             <h2 className="featured-post__label">Featured Post</h2>
-            {featuredPost.imageData && (
+            {featuredPost.imageUrl && (
                 <div className="featured-post__image-wrapper">
-                    <img src={featuredPost.imageData} alt={featuredPost.title} className="featured-post__image" />
+                    <img src={featuredPost.imageUrl} alt={featuredPost.title} className="featured-post__image" />
                 </div>
             )}
             <div className="featured-post__content">
