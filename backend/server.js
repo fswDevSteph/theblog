@@ -1,6 +1,7 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
+import mongoose from 'mongoose';
+
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -18,13 +19,16 @@ console.log(`Connecting to MongoDB with URI: ${mongoURI}`);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// app.use(cors({
-//     origin: ['https://theblog-client.onrender.com', 'http://localhost:5050'],
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     allowedHeaders: ['Content-Type', 'Authorization']
-// }));
 app.use(cors({
-    origin: ['https://www.blogettebird.com', 'http://localhost:5050'],
+    origin: (origin, callback) => {
+        const allowedOrigins = ['https://www.blogettebird.com', 'http://localhost:5173'];
+        console.log('Incoming request from origin:', origin);
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
