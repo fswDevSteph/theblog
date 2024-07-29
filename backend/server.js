@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
 //     allowedHeaders: ['Content-Type', 'Authorization']
 // }));
 app.use(cors({
-    origin: 'https://www.blogettebird.com',
+    origin: ['https://www.blogettebird.com', 'http://localhost:5050'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
