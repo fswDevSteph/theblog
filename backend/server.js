@@ -18,11 +18,17 @@ console.log(`Connecting to MongoDB with URI: ${mongoURI}`);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// app.use(cors({
+//     origin: ['https://theblog-client.onrender.com', 'http://localhost:5050'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization']
+// }));
 app.use(cors({
-    origin: ['https://theblog-client.onrender.com', 'http://localhost:5050'],
+    origin: 'https://www.blogettebird.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
