@@ -31,6 +31,8 @@ const FeaturePost = () => {
             {featuredPost.imageUrl && (
                 <div className="featured-post__image-wrapper">
                     <img src={featuredPost.imageUrl} alt={featuredPost.title} className="featured-post__image" />
+                    console.error('Error loading image:', e);
+                    console.log('Failed image URL:', featuredPost.imageUrl);
                 </div>
             )}
             <div className="featured-post__content">
