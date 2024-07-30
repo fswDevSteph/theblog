@@ -11,7 +11,9 @@ const FeaturePost = () => {
         // axios.get('http://localhost:5050/api/posts/featured')
         axios.get(`${import.meta.env.VITE_API_URL}/api/posts/featured`)
             .then(response => {
-                console.log('Featured post data:', response.data);
+                console.log('Full featured post data:', response.data);
+                console.log('Image URL:', response.data.imageUrl);
+
                 setFeaturedPost(response.data);
             })
             .catch(error => {
