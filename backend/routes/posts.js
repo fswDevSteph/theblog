@@ -102,18 +102,14 @@ router.get('/related/:id', async (req, res) => {
             _id: { $ne: post._id }
         }).limit(3);
 
-        const relatedPostsWithimageData = relatedPosts.map(relatedPost => {
-            let imageData = null;
-            if (relatedPost.image && relatedPost.image.data) {
-                imageData = `data:${relatedPost.image.contentType};base64,${relatedPost.image.data.toString('base64')}`;
-            }
+        const relatedPostsWithImageUrl = relatedPosts.map(relatedPost => {
             return {
                 ...relatedPost._doc,
-                imageData
+                imageUrl: relatedPost.imageUrl
             };
         });
 
-        res.json(relatedPostsWithimageData);
+        res.json(relatedPostsWithImageUrl);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -128,13 +124,9 @@ router.get('/:id', async (req, res) => {
             console.log('Post not found');
             return res.status(404).json({ message: 'Post not found' });
         }
-        let imageData = null;
-        if (post.image && post.image.data) {
-            imageData = `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`;
-        }
         const postWithImage = {
             ...post._doc,
-            imageData
+            imageUrl: post.imageUrl
         };
         console.log('Post found:', postWithImage);
         res.json(postWithImage);
@@ -147,11 +139,15 @@ router.get('/:id', async (req, res) => {
 // //! Create new post with image
 router.post('/', upload.array('imageData', 5), async (req, res) => { // Allow up to 5 imageData
     console.log('POST request received to create a new post');
-    try {
-        const imageData = req.files ? req.files.map(file => ({
-            data: fs.readFileSync(path.join(__dirname, '../uploads/' + file.filename)),
-            contentType: file.mimetype,
-            caption: req.body[`caption_${file.fieldname}`] // Assuming you send captions
+    try { // Assuming you're using Cloudinary to upload images and get URL
+        const imageUrl = req.files ? await Promise.all(req.files.map(async file => {
+            // Upload to Cloudinary and get URL
+            // This is a placeholder - you need to implement the actual Cloudinary upload
+            const result = await uploadToCloudinary(file.path);
+            return {
+                url: result.url,
+                caption: req.body[`caption_${file.fieldname}`] // Assuming you send captions
+            };
         })) : [];
 
         const post = new Post({
@@ -160,7 +156,7 @@ router.post('/', upload.array('imageData', 5), async (req, res) => { // Allow up
             author: req.body.author,
             date: Date.now(),
             category: req.body.category,
-            imageData: imageData
+            imageUrl: imageUrl
         });
 
         const newPost = await post.save();
@@ -169,7 +165,7 @@ router.post('/', upload.array('imageData', 5), async (req, res) => { // Allow up
         // Clean up uploaded files
         if (req.files) {
             req.files.forEach(file => {
-                fs.unlinkSync(path.join(__dirname, '../uploads/' + file.filename));
+                fs.unlinkSync(file.path);
             });
         }
 
@@ -179,35 +175,6 @@ router.post('/', upload.array('imageData', 5), async (req, res) => { // Allow up
         res.status(400).json({ message: err.message });
     }
 });
-// router.post('/', upload.single('image'), async (req, res) => {
-//     console.log('POST request received to create a new post');
-//     try {
-//         const post = new Post({
-//             title: req.body.title,
-//             content: req.body.content,
-//             author: req.body.author,
-//             date: Date.now(),
-//             category: req.body.category,
-//             image: req.file ? {
-//                 data: fs.readFileSync(path.join(__dirname, '../uploads/' + req.file.filename)),
-//                 contentType: req.file.mimetype
-//             } : undefined
-//         });
-
-//         const newPost = await post.save();
-//         console.log('New post created:', newPost);
-
-
-//         if (req.file) {
-//             fs.unlinkSync(path.join(__dirname, '../uploads/' + req.file.filename));
-//         }
-
-//         res.status(201).json(newPost);
-//     } catch (err) {
-//         console.error('Error creating new post:', err);
-//         res.status(400).json({ message: err.message });
-//     }
-// });
 
 //! Like a post
 router.post('/:id/like', async (req, res) => {
