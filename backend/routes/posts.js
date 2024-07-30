@@ -26,13 +26,7 @@ router.get('/', async (req, res) => {
         const posts = await Post.find().sort({ date: -1 });
         console.log(`Found ${posts.length} posts`);
 
-        const postsWithimageData = posts.map(post => {
-            let imageData = null;
-            if (post.image && post.image.data) {
-                imageData = `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`;
-                console.log('Image Data for post:', post._id, imageData);
-            }
-            return {
+        const postsWithImageUrl = posts.map(post => ({
                 ...post._doc,
                 imageData
             };
@@ -67,9 +61,9 @@ router.get('/featured', async (req, res) => {
             return res.status(404).json({ message: 'No featured post found' });
         }
 
-        let imageData = null;
+        let imageUrl = null;
         if (featuredPost.image && featuredPost.image.data) {
-            imageData = `data:${featuredPost.image.contentType};base64,${featuredPost.image.data.toString('base64')}`;
+            imageUrl = `data:${featuredPost.image.contentType};base64,${featuredPost.image.data.toString('base64')}`;
         }
 
         const featuredPostWithImage = {
@@ -79,6 +73,7 @@ router.get('/featured', async (req, res) => {
             date: featuredPost.date,
             author: featuredPost.author,
             imageUrl: imageUrl
+
         };
 
         console.log('Sending featured post:', JSON.stringify(featuredPostWithImage, null, 2));
@@ -124,7 +119,8 @@ router.get('/:id', async (req, res) => {
             console.log('Post not found');
             return res.status(404).json({ message: 'Post not found' });
         }
-        const postWithImage = {
+
+        const postWithImageUrl = {
             ...post._doc,
             imageUrl: post.imageUrl
         };
@@ -137,17 +133,13 @@ router.get('/:id', async (req, res) => {
 });
 
 // //! Create new post with image
-router.post('/', upload.array('imageData', 5), async (req, res) => { // Allow up to 5 imageData
+router.post('/', upload.array('imageUrl', 5), async (req, res) => {
     console.log('POST request received to create a new post');
-    try { // Assuming you're using Cloudinary to upload images and get URL
-        const imageUrl = req.files ? await Promise.all(req.files.map(async file => {
-            // Upload to Cloudinary and get URL
-            // This is a placeholder - you need to implement the actual Cloudinary upload
-            const result = await uploadToCloudinary(file.path);
-            return {
-                url: result.url,
-                caption: req.body[`caption_${file.fieldname}`] // Assuming you send captions
-            };
+    try {
+        const imageUrl = req.files ? req.files.map(file => ({
+            data: fs.readFileSync(path.join(__dirname, '../uploads/' + file.filename)),
+            contentType: file.mimetype,
+            caption: req.body[`caption_${file.fieldname}`]
         })) : [];
 
         const post = new Post({
