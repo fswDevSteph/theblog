@@ -8,6 +8,7 @@ const Blogs = () => {
         const fetchPosts = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/posts`);
+                console.log('Fetched posts:', response.data);
                 setPosts(response.data);
             } catch (error) {
                 console.error('Error fetching posts:', error);
@@ -26,7 +27,7 @@ const Blogs = () => {
                     {post.imageUrl && (
                         <img
                             src={post.imageUrl}
-                            alt="Post Image"
+                            alt={post.title}
                             className="post__image"
                         />
                     )}
