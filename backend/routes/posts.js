@@ -78,7 +78,7 @@ router.get('/featured', async (req, res) => {
             content: featuredPost.content,
             date: featuredPost.date,
             author: featuredPost.author,
-            imageData: imageData
+            imageUrl: imageUrl
         };
 
         console.log('Sending featured post:', JSON.stringify(featuredPostWithImage, null, 2));
