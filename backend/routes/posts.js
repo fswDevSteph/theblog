@@ -43,12 +43,13 @@ router.get('/', async (req, res) => {
             likes: relatedPost.likes
         }));
 
-        res.json(postsWithimageData);
-    } catch (err) {
-        console.error('Error in GET all posts:', err);
-        res.status(500).json({ message: err.message });
+        res.json(relatedPostsData);
+    } catch (error) {
+        console.error('Error fetching related posts:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
+
 
 //!get featured post
 router.get('/featured', async (req, res) => {
