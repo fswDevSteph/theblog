@@ -22,27 +22,26 @@ const upload = multer({ storage: storage });
 //! Get all posts
 router.get('/', async (req, res) => {
     try {
-        console.log('GET request received for all posts');
-        const posts = await Post.find().sort({ date: -1 });
-        console.log(`Found ${posts.length} posts`);
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
 
-        const postsWithImageUrl = posts.map(post => ({
-                ...post._doc,
-                imageData
-            };
-        });
+        const relatedPosts = await Post.find({
+            category: post.category,
+            _id: { $ne: post._id }
+        }).limit(3);
 
-        // const postsWithimageData = posts.map(post => {
-        //     let imageData = null;
-        //     if (post.image && post.image.data) {
-        //         imageData = `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`;
-        //         console.log('Image Data for post:', post._id, imageData);
-        //     }
-        //     return {
-        //         ...post._doc,
-        //         imageData
-        //     };
-        // });
+        const relatedPostsData = relatedPosts.map(relatedPost => ({
+            _id: relatedPost._id,
+            title: relatedPost.title,
+            content: relatedPost.content.substring(0, 200) + '...', // Truncate content for preview
+            author: relatedPost.author,
+            date: relatedPost.date,
+            imageUrl: relatedPost.imageUrl, // Use Cloudinary URL
+            category: relatedPost.category,
+            likes: relatedPost.likes
+        }));
 
         res.json(postsWithimageData);
     } catch (err) {
