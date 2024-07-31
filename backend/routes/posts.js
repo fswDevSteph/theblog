@@ -22,30 +22,23 @@ const upload = multer({ storage: storage });
 //! Get all posts
 router.get('/', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
-        if (!post) {
-            return res.status(404).json({ message: 'Post not found' });
-        }
-
-        const relatedPosts = await Post.find({
+        console.log('Fetching all posts...');
+        const posts = await Post.find();
+        console.log('Posts found:', posts.length);
+        const postsData = posts.map(post => ({
+            _id: post._id,
+            title: post.title,
+            content: post.content.substring(0, 200) + '...',
+            author: post.author,
+            date: post.date,
+            imageUrl: post.imageUrl,
             category: post.category,
-            _id: { $ne: post._id }
-        }).limit(3);
-
-        const relatedPostsData = relatedPosts.map(relatedPost => ({
-            _id: relatedPost._id,
-            title: relatedPost.title,
-            content: relatedPost.content.substring(0, 200) + '...', // Truncate content for preview
-            author: relatedPost.author,
-            date: relatedPost.date,
-            imageUrl: relatedPost.imageUrl, // Use Cloudinary URL
-            category: relatedPost.category,
-            likes: relatedPost.likes
+            likes: post.likes
         }));
-
-        res.json(relatedPostsData);
+        console.log('Sending posts data:', JSON.stringify(postsData, null, 2));
+        res.json(postsData);
     } catch (error) {
-        console.error('Error fetching related posts:', error);
+        console.error('Error fetching posts:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
@@ -54,30 +47,14 @@ router.get('/', async (req, res) => {
 //!get featured post
 router.get('/featured', async (req, res) => {
     try {
+        console.log('Fetching featured post...');
         const featuredPost = await Post.findOne({ featured: true });
-        console.log('Featured post found');
         if (!featuredPost) {
             console.log('No featured post found');
             return res.status(404).json({ message: 'No featured post found' });
         }
-
-        let imageUrl = null;
-        if (featuredPost.image && featuredPost.image.data) {
-            imageUrl = `data:${featuredPost.image.contentType};base64,${featuredPost.image.data.toString('base64')}`;
-        }
-
-        const featuredPostWithImage = {
-            _id: featuredPost._id,
-            title: featuredPost.title,
-            content: featuredPost.content,
-            date: featuredPost.date,
-            author: featuredPost.author,
-            imageUrl: imageUrl
-
-        };
-
-        console.log('Sending featured post:', JSON.stringify(featuredPostWithImage, null, 2));
-        res.json(featuredPostWithImage);
+        console.log('Featured post found:', JSON.stringify(featuredPost, null, 2));
+        res.json(featuredPost);
     } catch (err) {
         console.error('Error fetching featured post:', err);
         res.status(500).json({ message: 'Internal server error', error: err.message });
@@ -85,27 +62,23 @@ router.get('/featured', async (req, res) => {
 });
 
 //!fetch related posts by category value
-router.get('/related/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
+    console.log('GET request received for post ID:', req.params.id);
     try {
         const post = await Post.findById(req.params.id);
         if (!post) {
+            console.log('Post not found');
             return res.status(404).json({ message: 'Post not found' });
         }
 
-        const relatedPosts = await Post.find({
-            category: post.category,
-            _id: { $ne: post._id }
-        }).limit(3);
-
-        const relatedPostsWithImageUrl = relatedPosts.map(relatedPost => {
-            return {
-                ...relatedPost._doc,
-                imageUrl: relatedPost.imageUrl
-            };
-        });
-
-        res.json(relatedPostsWithImageUrl);
+        const postWithImageUrl = {
+            ...post._doc,
+            imageUrl: post.imageUrl
+        };
+        console.log('Post found:', postWithImageUrl);
+        res.json(postWithImageUrl);
     } catch (err) {
+        console.error('Error fetching post:', err);
         res.status(500).json({ message: err.message });
     }
 });

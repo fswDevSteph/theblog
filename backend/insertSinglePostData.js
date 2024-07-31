@@ -20,7 +20,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 //! 1. After editing, paste single post data here
 //! in terminal, run: node insertSinglePostData.js
 const singlePost = {
-    title: "HihiHIhiHI",
+    title: "LEARN",
     content: `
 There's nothing quite like the experience of getting lost in a good book. From the moment you open the cover, you're transported to another world where anything is possible. Here are a few reasons why immersing yourself in a story can be incredibly rewarding:
 
@@ -40,14 +40,14 @@ So, the next time you pick up a book, remember that you're not just reading word
     `,
     author: "NOvel NOva Bella",
     date: new Date("2024-07-16"),
-    category: "Reading",
+    category: "learning",
     featured: false
 };
 
 const insertSinglePost = async () => {
     try {
         // Upload image to Cloudinary
-        const result = await cloudinary.uploader.upload(path.join(__dirname, 'uploads', 'books.jpg'));
+        const result = await cloudinary.uploader.upload(path.join(__dirname, 'uploads', 'learn.jpg'));
 
         // Add the Cloudinary URL to the post data
         singlePost.imageUrl = result.secure_url;
