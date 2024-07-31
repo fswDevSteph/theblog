@@ -6,12 +6,8 @@ const postSchema = new mongoose.Schema({
     author: { type: String, required: true },
     date: { type: Date, required: true },
     imageUrl: { type: String },
-    likes: {
-        type: Number, default: 0
-    },
-    featured: {
-        type: Boolean, default: false
-    },
+    likes: { type: Number, default: 0 },
+    featured: { type: Boolean, default: false },
     category: { type: String, required: true }
 });
 

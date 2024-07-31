@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -14,10 +13,10 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 const mongoURI = process.env.MONGODB_URI;
 
-console.log(`Connecting to MongoDB with URI: ${mongoURI}`);
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+console.log(`Connecting to MongoDB with URI: ${mongoURI}`);
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -34,10 +33,10 @@ app.use(cors({
     credentials: true
 }));
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// API routes
 app.use('/api/posts', postRoutes);
 app.use('/api/subscribe', subscribeRoutes);
 
@@ -59,18 +58,14 @@ mongoose.connect(mongoURI, {
         process.exit(1);
     });
 
-// MongoDB connection event listeners
-mongoose.connection.on('error', (err) => {
-    console.error('MongoDB connection error:', err);
-});
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')));
 
-mongoose.connection.on('disconnected', () => {
-    console.log('MongoDB disconnected');
-});
-
-mongoose.connection.on('reconnected', () => {
-    console.log('MongoDB reconnected');
-});
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -81,7 +76,3 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-app.use((err, req, res, next) => {
-    console.error('Error:', err.message);
-    res.status(500).json({ message: 'Something went wrong!', error: err.message });
-});

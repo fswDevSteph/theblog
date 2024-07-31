@@ -8,7 +8,6 @@ const FeaturePost = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // axios.get('http://localhost:5050/api/posts/featured')
         axios.get(`${import.meta.env.VITE_API_URL}/api/posts/featured`)
             .then(response => {
                 console.log('Full featured post data:', response.data);
@@ -31,8 +30,6 @@ const FeaturePost = () => {
             {featuredPost.imageUrl && (
                 <div className="featured-post__image-wrapper">
                     <img src={featuredPost.imageUrl} alt={featuredPost.title} className="featured-post__image" />
-                    console.error('Error loading image:', e);
-                    console.log('Failed image URL:', featuredPost.imageUrl);
                 </div>
             )}
             <div className="featured-post__content">

@@ -36,7 +36,7 @@ export const likePost = async (id) => {
     return api.post(`/api/posts/${id}/like`);
 };
 
-//!get related posts
+//! get related posts
 export const getRelatedPosts = async (postId) => {
-    return api.get(`/api/posts/related/${postId}`);
+    return api.get(`/api/posts/${postId}/related`);
 };

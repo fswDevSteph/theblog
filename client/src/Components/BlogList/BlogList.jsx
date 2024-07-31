@@ -13,8 +13,6 @@ const BlogList = ({ isPreview = true, limit = null, excludeFeatured = false }) =
                 console.log('Fetching posts...');
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/posts`, { timeout: 10000 });
                 console.log('Raw response:', response);
-                console.log('Response data:', response.data);
-                console.log('Response data type:', typeof response.data);
 
                 if (!Array.isArray(response.data)) {
                     console.error('Response is not an array:', response.data);
@@ -30,22 +28,17 @@ const BlogList = ({ isPreview = true, limit = null, excludeFeatured = false }) =
                     return;
                 }
 
-                console.log('Fetched posts:', postsData);
                 let sortedPosts = postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-                console.log('Sorted posts:', sortedPosts);
 
                 if (excludeFeatured) {
                     sortedPosts = sortedPosts.filter(post => !post.featured);
-                    console.log('Filtered posts (excluding featured):', sortedPosts);
                 }
 
                 if (limit) {
                     sortedPosts = sortedPosts.slice(0, limit);
-                    console.log('Limited posts:', sortedPosts);
                 }
 
                 setPosts(sortedPosts);
-                console.log('Posts set to state:', sortedPosts);
             } catch (error) {
                 console.error('Error fetching posts:', error);
                 setError('Failed to fetch posts');
@@ -64,7 +57,6 @@ const BlogList = ({ isPreview = true, limit = null, excludeFeatured = false }) =
             {posts.map(post => (
                 <div key={post._id} className="blog-list__item">
                     <BlogPost
-                        key={post._id}
                         id={post._id}
                         title={post.title}
                         date={new Date(post.date).toLocaleDateString()}
